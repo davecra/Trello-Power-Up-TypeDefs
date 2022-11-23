@@ -1,7 +1,7 @@
 /********************************************************************************
 Trello Object Definitions File
 version 1.0.20221122
-Copyright (c) 2022 Kryl Solutions
+Copyright (c) 2022 David E. Craig, dba Kryl Solutions
 License Type: MIT, 2022
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
