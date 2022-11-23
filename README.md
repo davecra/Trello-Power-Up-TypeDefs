@@ -48,6 +48,7 @@ const createBoardButton = async (t,opts) => {
  * User clicked the board button - open a popup
  * @type {TrelloDefaultCallback}
  * @param {TrelloObject} t
+ * @param {TrelloCallbackOptions} opts
  */
 const onBtnClick = async(t,opts) => {
  /** @type {TrelloPopupConfirmOptions} */
