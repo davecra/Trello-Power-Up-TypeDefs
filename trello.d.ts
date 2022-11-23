@@ -26,7 +26,7 @@ SOFTWARE.
  * @typedef {Object} TrelloObject - Primary (t) Trello Object
  * @property {TrelloObjectGet} get - Get data at a specific scope and visibility
  * @property {TrelloObjectSet} set - Used to store data within the Trello Power-Up platform.
- * @property {TrelloObjectGetAll} getAll - Return all pluginData for all scopes & visibilities currently in context
+ * @property {TrelloObjectGetAll} getAll - returns all pluginData for all scopes & visibilities currently in context
  * @property {TrelloObjectRemove} remove - You can remove a key at a specific scope, or you can remove multiple keys at once.
  * @property {TrelloApiClientObject} getRestApi - Get an instance of the API client.
  * @property {TrelloBoardFunction} board - Ask Trello for information on specific properties of the current board.
@@ -72,14 +72,14 @@ SOFTWARE.
 /** 
  * @callback TrelloIFrameFunction
  * @param {{appKey:String, appName:String}} opts // for authentication
- * @return {TrelloObject}
+ * @returns {TrelloObject}
  */
 
 /**
  * @callback TrelloDefaultCallback
  * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts
- * @return {TrelloDefaultCallback}
+ * @returns {TrelloDefaultCallback}
  */
 /**
  * @callback TrelloIframeFunction
@@ -97,16 +97,16 @@ SOFTWARE.
  * @param {{apiKey:String, appName:String}} opts // for authentication
  */
 /**
- * @callback TrelloListSortersFunction - Max 5 Sorters Allowed. If you return more than five list sorters, Trello will only display the first five.
+ * @callback TrelloListSortersFunction - Max 5 Sorters Allowed. If you returns more than five list sorters, Trello will only display the first five.
  * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts - opts.cards contains all card objects in the list
- * @return {TrelloListActionsOption[]}
+ * @returns {TrelloListActionsOption[]}
  */
 /**
  * @callback TrelloListActionsFunction
  * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts
- * @return {TrelloListActionsOption}
+ * @returns {TrelloListActionsOption}
  */
 /**
  * @typedef {Object} TrelloListActionsOption
@@ -117,7 +117,7 @@ SOFTWARE.
  * @callback TrelloFormatUrlFunction
  * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts - contains the opts.url we care about
- * @return {TrelloFormatUrlOption}
+ * @returns {TrelloFormatUrlOption}
  */
 /**
  * @typedef {Object} TrelloFormatUrlOption
@@ -137,13 +137,13 @@ SOFTWARE.
  * @callback TrelloCardFromUrlFunction
  * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts
- * @return {TrelloCard}
+ * @returns {TrelloCard}
  */
 /**
  * @callback TrelloDetailBadgesFunction
  * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts
- * @return {TrelloDetailBadgeOption[]}
+ * @returns {TrelloDetailBadgeOption[]}
  */
 /**
  * @typedef {Object} TrelloDetailBadgeOption
@@ -160,7 +160,7 @@ SOFTWARE.
  * @callback TrelloCardButtonsFunction
  * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts
- * @return {TrelloCardButtonOption[]}
+ * @returns {TrelloCardButtonOption[]}
  */
 /**
  * @typedef {Object} TrelloCardButtonOption
@@ -175,7 +175,7 @@ SOFTWARE.
  * @callback TrelloCardBadgesFunction
  * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts
- * @return {TrelloCardBadgesOption[]} 
+ * @returns {TrelloCardBadgesOption[]} 
  */
 /**
  * @typedef {Object} TrelloCardBadgesOption
@@ -189,31 +189,31 @@ SOFTWARE.
  * @callback TrelloAttachmentSectionFunction
  * @param {TrelloObject} t
  * @param {{entries:TrelloAttachmentDataType[]}} opts
- * @return {TrelloClaimedItem[]}
+ * @returns {TrelloClaimedItem[]}
  */
 /**
  * @callback TrelloAttachmentThumbnailFunction
  * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts
- * @return {TrelloThumbnailItem}
+ * @returns {TrelloThumbnailItem}
  */
 /**
  * @callback TrelloAuthorizationStatusFunction
  * @param {TrelloObject} t 
  * @param {TrelloCallbackOptions} opts
- * @return {TrelloAuthStatus}
+ * @returns {TrelloAuthStatus}
  */
 /**
  * @callback TrelloBoardButtonFunction
  * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts
- * @return {BoardButtonOption[]}
+ * @returns {BoardButtonOption[]}
  */
 /**
  * @callback TrelloCardBackSectionFunction
  * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts
- * @return {TrelloCardBackSectionOption}
+ * @returns {TrelloCardBackSectionOption}
  */
 /**
  * @typedef {Object} TrelloCardBackSectionOption card-back-section
@@ -479,7 +479,7 @@ SOFTWARE.
 /**
  * @callback TrelloLocalizeNodeFunction
  * @param {HTMLElement} DOMelement
- * @return 
+ * @returns 
  */
 /**
  * @callback TrelloLocalizeKeysFunction
@@ -533,7 +533,7 @@ SOFTWARE.
 /**
  * @callback TrelloBoardFunction
  * @param {... ("all" | "id" | "name" | "url" | "shortLink" | "members" | "dateLastActivity" | "idOrganization" | "customFields" | "labels" | "memberships")} fields
- * @return {TrelloBoard}
+ * @returns {TrelloBoard}
  */
 /**
  * @callback TrelloApiClientObject
@@ -570,7 +570,7 @@ SOFTWARE.
  * @param {"board"|"card"|"member"|"organization"} scope - Valid scopes include: board, card, member, organization, or the ID of a card on the current board.
  * @param {"shared"|"private"} visibility - There are two options for visibility: shared and private. Shared means that any Trello member who can see the object and private means that only the member will be able to see it.
  * @param {String} [key] - Optional: the key for the setting
- * @param {String} [default] - Default value to return if key not found - if an {Object} use JSON.stringify()
+ * @param {String} [default] - Default value to returns if key not found - if an {Object} use JSON.stringify()
  * @returns {String} JSON Data
  */
 /**
