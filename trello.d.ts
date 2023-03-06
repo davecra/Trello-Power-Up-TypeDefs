@@ -1,6 +1,6 @@
 /********************************************************************************
 Trello Object Definitions File
-version 1.0.20221122
+version 1.0.20230306
 Copyright (c) 2022 David E. Craig, dba Kryl Solutions
 License Type: MIT, 2022
 
@@ -40,18 +40,18 @@ SOFTWARE.
  * @property {TrelloIsMemberSignedInFunction} isMemberSignedIn - Synchronously determine if your Power-Up is being used by a logged in Trello member.
  * @property {TrelloLocalizeKeyFunction} localizeKey - Given a key, and optional replacement data, synchronously returns the output of window.localizer.localize(key, data)
  * @property {TrelloLocalizeKeysFunction} localizeKeys - Synchronously localizes multiple keys
- * @property {TrelloLocalizeNodeFunction} localizeNode - Synchronously inserts localized texts into DOM nodes starting at the provided node and all of its children. 
+ * @property {TrelloLocalizeNodeFunction} localizeNode - Synchronously inserts localized texts into DOM nodes starting at the provided node and all of its children.
  * @property {TrelloArgFunction} arg - When you create additional iframes, such as for attachment-sections, you can pass yourself arguments. Those arguments can be retrieved on that page once it is loaded via t.arg
  * @property {TrelloAttachFunction} attach - With t.attach you can attach a URL to a card, as long as you are in the context of a particular card.
  * @property {TrelloAuthWindowFunction} authorize - Sometimes, such as to complete an oauth flow, you need to show a page in its own new window. For authentication, this is usually because oauth pages (for security reasons) cannot be displayed inside of iframes.
  * @property {TrelloGetContextFunction} getContext - Synchronously get the current context for t
- * @property {TrelloJwtFunction} jwt - Asynchronously request a signed JWT from Trello for the current member. The purpose of these JWTs is for you to be able to secure the communication between your Power-Up and your server. 
+ * @property {TrelloJwtFunction} jwt - Asynchronously request a signed JWT from Trello for the current member. The purpose of these JWTs is for you to be able to secure the communication between your Power-Up and your server.
  * @property {TrelloNotifyParentFunction} notifyParent - Calling this method from that popup will trigger Trello to run the callback in the parent
  * @property {TrelloRenderFunction} render - make sure any logic that updates your UI in visible iframes with changes should live in or be triggered by t.render. Trello will re-call t.render whenever something changes that we think might be relevant.
  * @property {TrelloSignUrlFunction} signUrl - Add current context data to a URL so that (as long as it is opened by Trello) the page will continue to be able to communicate with Trello via the Power-Up interface.
  * @property {TrelloAlertFunction} alert - to notify a user of something. Please don't overuse.
  * @property {Function} hideAlert - you can use an alert with a long duration, and when the operation completes, you can hide the alert manually by calling t.hideAlert()
- * @property {TrelloBoardBarFunction} boardBar - allows you to load an iframe across the bottom of the board. You are allowed any height you want, up to 60% of the height of the window (this includes the height of the header of the board bar). 
+ * @property {TrelloBoardBarFunction} boardBar - allows you to load an iframe across the bottom of the board. You are allowed any height you want, up to 60% of the height of the window (this includes the height of the header of the board bar).
  * @property {Function} closeBoardBar - if you need to close the board bar programmatically you can do so by calling t.closeBoardBar()
  * @property {TrelloModalFunction} modal - lets you display an iframe directly on top of Trello. The modal comes in two widths, fullscreen: true.
  * @property {Function} closeModal - If you have a modal open, you can call t.closeModal() to close it.
@@ -64,12 +64,12 @@ SOFTWARE.
  * @property {TrelloSizeToFunction} sizeTo - You'll almost always need a way to tell Trello that the size of the content in one of your iframes has changed, or maybe doesn't perfectly line up with the height you requested when instantiating the iframe.
  * @property {TrelloSafeFunction} safe - Escapes a string for insertion into HTML, replacing &, <, >, ", and ' characters.
  */
-/**  
+/**
  * @typedef {Object} TrelloPowerUp
  * @property {TrelloInitializeFunction} initialize
  * @property {TrelloIFrameFunction} iframe
  */
-/** 
+/**
  * @callback TrelloIFrameFunction
  * @param {{appKey:String, appName:String}} opts // for authentication
  * @returns {TrelloObject}
@@ -87,7 +87,7 @@ SOFTWARE.
  */
 /**
  * @callback TrelloInitializeFunction
- * @param {...( {'attachment-sections':TrelloAttachmentSectionFunction} | {'attachment-thumbnail':TrelloAttachmentThumbnailFunction} | 
+ * @param {...( {'attachment-sections':TrelloAttachmentSectionFunction} | {'attachment-thumbnail':TrelloAttachmentThumbnailFunction} |
  *              {'authorization-status':TrelloAuthorizationStatusFunction} | {'board-buttons':TrelloBoardButtonFunction} |
  *              {'card-back-section':TrelloCardBackSectionFunction} | {'card-badges':TrelloCardBadgesFunction} | {'card-buttons':TrelloCardButtonsFunction} |
  *              {'card-detail-badges':TrelloDetailBadgesFunction} | {'card-from-url':TrelloCardFromUrlFunction} | {'format-url':TrelloFormatUrlFunction} |
@@ -151,7 +151,7 @@ SOFTWARE.
  * @property {Number} refresh - Only relevant for the result of a dynamic badge. The number of seconds for Trello to wait before re-running the dynamic function provided. Minimum of 10. Try to keep this as high as reasonable.
  * @property {String} text	- Text shown inside of the badge
  * @property {String} [title] - Optional text shown above the badge
- * @property {TrelloColor} [color] - Optional color for the badge. 
+ * @property {TrelloColor} [color] - Optional color for the badge.
  * @property {TrelloDefaultCallback} [callback] - Optional, mutually exclusive with url. If provided, a function to be called when the badge is clicked
  * @property {String} [url]	- Optional, mutually exclusive with callback. If provided, a URL to navigate to when the badge is clicked
  * @property {String} [target]	- Optional, can be used in conjunction with url to provide a target frame name for the given url
@@ -175,7 +175,7 @@ SOFTWARE.
  * @callback TrelloCardBadgesFunction
  * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts
- * @returns {TrelloCardBadgesOption[]} 
+ * @returns {TrelloCardBadgesOption[]}
  */
 /**
  * @typedef {Object} TrelloCardBadgesOption
@@ -183,7 +183,7 @@ SOFTWARE.
  * @property {Number} refresh - Only relevant for the result of a dynamic badge. # of seconds for Trello to wait before re-running the dynamic function. Minimum of 10. Try to keep this as high as reasonable.
  * @property {String} [text]  - Optional text to display on the badge
  * @property {String} [icon] - Optional icon to show with the badge. When using a colored badge, make sure the color of the icon is white or gray as appropriate.
- * @property {TrelloColor} [color] - Optional color for the badge. 
+ * @property {TrelloColor} [color] - Optional color for the badge.
  */
 /**
  * @callback TrelloAttachmentSectionFunction
@@ -199,7 +199,7 @@ SOFTWARE.
  */
 /**
  * @callback TrelloAuthorizationStatusFunction
- * @param {TrelloObject} t 
+ * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts
  * @returns {TrelloAuthStatus}
  */
@@ -265,11 +265,10 @@ SOFTWARE.
  * @property {String} url
  * @property {TrelloAttachmentDataType[]} entries
  * @property {TrelloCard[]} cards
- * 
  */
 /**
  * @callback TrelloSafeFunction
- * @param {String} string 
+ * @param {String} string
  */
 /**
  * @callback TrelloSizeToFunction
@@ -348,13 +347,13 @@ SOFTWARE.
  */
 /**
  * @callback TrelloNavigateFunction
- * @param {TrelloNavigateOptions} opts 
+ * @param {TrelloNavigateOptions} opts
  */
 /**
  * @typedef {Object} TrelloNavigateOptions
  * @property {String} url
  */
-/** 
+/**
  * @callback TrelloUpdateModalFunction
  * @param {TrelloUpdateModalOptions} opts
  */
@@ -438,7 +437,7 @@ SOFTWARE.
  * @callback TrelloJwtVerifyFunction
  * @param {String} token
  * @param {String} key
- * @returns {String} 
+ * @returns {String}
  */
 /**
  * @typedef {Object} TrelloJwtOptions
@@ -458,8 +457,8 @@ SOFTWARE.
  * @typedef {Object} TrelloAuthWindowOptions
  * @property {Number} height - Height of the window to be opened in pixels.
  * @property {Number} width - Width of the window to be opened in pixels.
- * @property {String} validToken - A function that returns a boolean value to indicate whether the token being returned is valid or not. 
- * @property {String} windowCallback - This callback gets called with the handle to the authorization window. 
+ * @property {String} validToken - A function that returns a boolean value to indicate whether the token being returned is valid or not.
+ * @property {String} windowCallback - This callback gets called with the handle to the authorization window.
  */
 /**
  * @callback TrelloAttachFunction
@@ -479,7 +478,6 @@ SOFTWARE.
 /**
  * @callback TrelloLocalizeNodeFunction
  * @param {HTMLElement} DOMelement
- * @returns 
  */
 /**
  * @callback TrelloLocalizeKeysFunction
@@ -541,8 +539,8 @@ SOFTWARE.
  */
 /**
  * @typedef {Object} TrelloApiClientOptionsObject
- * @property {TrelloIsAuthorizedFunction} isAuthorized - indicates whether the member has authorized your Power-Up to make API requests on their behalf. 
- * @property {TrelloAuthorizeFunction} authorize - Use client.authorize to kick off the auth flow and get a token you can use to make requests to the Trello REST API on behalf of the member. 
+ * @property {TrelloIsAuthorizedFunction} isAuthorized - indicates whether the member has authorized your Power-Up to make API requests on their behalf.
+ * @property {TrelloAuthorizeFunction} authorize - Use client.authorize to kick off the auth flow and get a token you can use to make requests to the Trello REST API on behalf of the member.
  * @property {TrelloGetTokenFunction} getToken - provides the token obtained from a previous call to client.authorize
  * @property {Function} clearToken - removes the stored token
  */
@@ -566,7 +564,7 @@ SOFTWARE.
  * @property {String} return_url - The URL to redirect to at the end of the auth flow. You generally don't want to change this. We also recommend that you specify the origins that your application will redirect to when completing authorization.
  */
 /**
- * @callback TrelloObjectGet 
+ * @callback TrelloObjectGet
  * @param {"board"|"card"|"member"|"organization"} scope - Valid scopes include: board, card, member, organization, or the ID of a card on the current board.
  * @param {"shared"|"private"} visibility - There are two options for visibility: shared and private. Shared means that any Trello member who can see the object and private means that only the member will be able to see it.
  * @param {String} [key] - Optional: the key for the setting
@@ -625,6 +623,7 @@ SOFTWARE.
  * @property {TrelloLabel[]} labels
  * @property {String} url
  * @property {String} shortLink
+ * @property {String} shortUrl
  * @property {String} idList
  * @property {String} idShort
  * @property {Date} dateLastActivity
@@ -633,7 +632,7 @@ SOFTWARE.
  * @property {{Number,Number}} coordinates
  * @property {String} address
  * @property {String} locationName
- * @property {Number} pos
+ * @property {"top" | "bottom" | Number} pos
  */
 /**
  * @typedef {Object} TrelloLabel
@@ -642,7 +641,7 @@ SOFTWARE.
  * @property {String} name
  * @property {TrelloColor} color
  */
-/** 
+/**
  * @typedef {Object} TrelloCardCover
  * @property {TrelloColor} color
  * @property {String} idAttachment
