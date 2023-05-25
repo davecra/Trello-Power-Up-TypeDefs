@@ -66,6 +66,7 @@ const onBtnClick = async(t,opts) => {
 ## Versions
 
  - v1.0.1.20221122 - first drop (beta)
+ - v1.0.1.20230525 - update to include secrets (release)
 
 ## Feedback
 
