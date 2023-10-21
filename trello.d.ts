@@ -1,7 +1,7 @@
 /********************************************************************************
  * Trello Object Definitions File
  * @author David E. Craig
- * @version 1.0.1.2023052511
+ * @version 1.0.1.20231021
  * @description This is a types description file for Trello Power-Up's.
  * @summary This type description file is provided as-is. It is provided to the 
  *          community to help built Power-Ups. For more information please see: 
