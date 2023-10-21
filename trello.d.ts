@@ -67,6 +67,23 @@
  * @property {Function} closePopup - Close an open popup.
  * @property {TrelloSizeToFunction} sizeTo - You'll almost always need a way to tell Trello that the size of the content in one of your iframes has changed, or maybe doesn't perfectly line up with the height you requested when instantiating the iframe.
  * @property {TrelloSafeFunction} safe - Escapes a string for insertion into HTML, replacing &, <, >, ", and ' characters.
+ *  * @property {TrelloStoreSecretFunction} storeSecret - To store sensitive information, such as an oauth token to a service other than Trello.
+ * @property {TrelloLoadSecretFunction} loadSecret - To retrieve secrets that you have stored via t.storeSecret. It will handle decrypting the secret before handing it back to you.
+ * @property {TrelloClearSecretFunction} clearSecret - You can use this method to remove a locally stored secret.
+ */
+/**
+ * @callback TrelloStoreSecretFunction
+ * @param {String} key
+ * @param {String} token
+ */
+/** 
+ * @callback TrelloLoadSecretFunction
+ * @param {String} key
+ * @returns {String}
+ */
+/** 
+ * @callback TrelloClearSecretFunction
+ * @param {String} key
  */
 /**  
  * @typedef {Object} TrelloPowerUp
@@ -75,15 +92,19 @@
  */
 /** 
  * @callback TrelloIFrameFunction
- * @param {{apiKey:String, appName:String}} opts // for authentication
- * @return {TrelloObject}
+ * @param {TrelloAuthenticationOptions} opts // for authentication
+ * @returns {TrelloObject}
  */
-
+/**
+ * @typedef {Object} TrelloAuthenticationOptions
+ * @property {String} apiKey
+ * @property {String} appName
+ */
 /**
  * @callback TrelloDefaultCallback
  * @param {TrelloObject} t
  * @param {TrelloCallbackOptions} opts
- * @return {TrelloDefaultCallback}
+ * @returns {TrelloDefaultCallback}
  */
 /**
  * @callback TrelloIframeFunction
@@ -104,13 +125,13 @@
 * @callback TrelloListSortersFunction - Max 5 Sorters Allowed. If you return more than five list sorters, Trello will only display the first five.
 * @param {TrelloObject} t
 * @param {TrelloCallbackOptions} opts - opts.cards contains all card objects in the list
-* @return {TrelloListActionsOption[]}
+* @returns {TrelloListActionsOption[]}
 */
 /**
 * @callback TrelloListActionsFunction
 * @param {TrelloObject} t
 * @param {TrelloCallbackOptions} opts
-* @return {TrelloListActionsOption}
+* @returns {TrelloListActionsOption}
 */
 /**
 * @typedef {Object} TrelloListActionsOption
@@ -121,7 +142,7 @@
 * @callback TrelloFormatUrlFunction
 * @param {TrelloObject} t
 * @param {TrelloCallbackOptions} opts - contains the opts.url we care about
-* @return {TrelloFormatUrlOption}
+* @returns {TrelloFormatUrlOption}
 */
 /**
 * @typedef {Object} TrelloFormatUrlOption
@@ -141,13 +162,13 @@
 * @callback TrelloCardFromUrlFunction
 * @param {TrelloObject} t
 * @param {TrelloCallbackOptions} opts
-* @return {TrelloCard}
+* @returns {TrelloCard}
 */
 /**
 * @callback TrelloDetailBadgesFunction
 * @param {TrelloObject} t
 * @param {TrelloCallbackOptions} opts
-* @return {TrelloDetailBadgeOption[]}
+* @returns {TrelloDetailBadgeOption[]}
 */
 /**
 * @typedef {Object} TrelloDetailBadgeOption
@@ -156,7 +177,7 @@
 * @property {String} text	- Text shown inside of the badge
 * @property {String} [title] - Optional text shown above the badge
 * @property {'blue' | 'green' | 'orange' | 'red' | 'yellow' | 'purple' | 'pink' | 'sky' | 'lime' | 'light-gray'} [color] - Optional color for the badge. 
-* @property {Function} [callback] - Optional, mutually exclusive with url. If provided, a function to be called when the badge is clicked
+* @property {TrelloDefaultCallback} [callback] - Optional, mutually exclusive with url. If provided, a function to be called when the badge is clicked
 * @property {String} [url]	- Optional, mutually exclusive with callback. If provided, a URL to navigate to when the badge is clicked
 * @property {String} [target]	- Optional, can be used in conjunction with url to provide a target frame name for the given url
 */
@@ -164,22 +185,25 @@
 * @callback TrelloCardButtonsFunction
 * @param {TrelloObject} t
 * @param {TrelloCallbackOptions} opts
-* @return {TrelloCardButtonOption[]}
+* @returns {TrelloCardButtonOption[]}
 */
 /**
 * @typedef {Object} TrelloCardButtonOption
 * @property {String} icon	- The url to an icon for the button. Trello will add a color=[hex] query parameter which you can use to make the icon color match ours. This is easiest to do with an SVG icon.
 * @property {String} text	- The name of the button, keep it short and sweet
-* @property {'admin','edit','readOnly','signedIn','signedOut','always'} condition - Default: edit. To what types of users the button should be displayed. admin - User is an admin on the board. edit - User can edit the board. readOnly - User can not edit the board. signedIn - User is logged into Trello. signedOut - User is not logged into Trello. always - Always show.
+* @property {TrelloDisplayCondition} condition - Default: edit. To what types of users the button should be displayed. admin - User is an admin on the board. edit - User can edit the board. readOnly - User can not edit the board. signedIn - User is logged into Trello. signedOut - User is not logged into Trello. always - Always show.
 * @property {Function} [callback] - Optional function that will be called on click of the button
 * @property {String} [url]	- Optional href for the button
 * @property {String} [target] - Optional with use of url property to add a target to the anchor tag.
 */
+/** 
+ * @typedef {'admin' | 'edit' | 'readOnly' | 'signedIn' | 'signedOut' | 'always'} TrelloDisplayCondition
+ */
 /**
 * @callback TrelloCardBadgesFunction
 * @param {TrelloObject} t
 * @param {TrelloCallbackOptions} opts
-* @return {TrelloCardBadgesOption[]} 
+* @returns {TrelloCardBadgesOption[]} 
 */
 /**
 * @typedef {Object} TrelloCardBadgesOption
@@ -187,37 +211,37 @@
 * @property {Number} refresh - Only relevant for the result of a dynamic badge. # of seconds for Trello to wait before re-running the dynamic function. Minimum of 10. Try to keep this as high as reasonable.
 * @property {String} [text]  - Optional text to display on the badge
 * @property {String} [icon] - Optional icon to show with the badge. When using a colored badge, make sure the color of the icon is white or gray as appropriate.
-* @property {'blue' | 'green' | 'orange' | 'red' | 'yellow' | 'purple' | 'pink' | 'sky' | 'lime' | 'light-gray'} [color] - Optional color for the badge. 
+* @property {TrelloColor} [color] - Optional color for the badge. 
 */
 /**
 * @callback TrelloAttachmentSectionFunction
 * @param {TrelloObject} t
 * @param {{entries:TrelloAttachmentDataType[]}} opts
-* @return {TrelloClaimedItem[]}
+* @returns {TrelloClaimedItem[]}
 */
 /**
 * @callback TrelloAttachmentThumbnailFunction
 * @param {TrelloObject} t
 * @param {TrelloCallbackOptions} opts
-* @return {TrelloThumbnailItem}
+* @returns {TrelloThumbnailItem}
 */
 /**
 * @callback TrelloAuthorizationStatusFunction
 * @param {TrelloObject} t 
 * @param {TrelloCallbackOptions} opts
-* @return {TrelloAuthStatus}
+* @returns {TrelloAuthStatus}
 */
 /**
 * @callback TrelloBoardButtonFunction
 * @param {TrelloObject} t
 * @param {TrelloCallbackOptions} opts
-* @return {BoardButtonOption[]}
+* @returns {TrelloBoardButtonOption[]}
 */
 /**
 * @callback TrelloCardBackSectionFunction
 * @param {TrelloObject} t
 * @param {TrelloCallbackOptions} opts
-* @return {TrelloCardBackSectionOption}
+* @returns {TrelloCardBackSectionOption}
 */
 /**
 * @typedef {Object} TrelloCardBackSectionOption card-back-section
@@ -227,14 +251,19 @@
 * @property {TrelloItemsAction} action	- card-back-section: An action object is shown action on the right above the card back section.
 */
 /**
-* @typedef {Object} BoardButtonOption
-* @property {{dark:String, light:String}} icon - board-buttons: Object with urls for icons to be displayed on light and dark backgrounds.
+* @typedef {Object} TrelloBoardButtonOption
+* @property {TrelloIconType} icon - board-buttons: Object with urls for icons to be displayed on light and dark backgrounds.
 * @property {String} text	- board-buttons: The name of the button, keep it short and sweet
-* @property {'admin' | 'edit' | 'readOnly' | 'signedIn' | 'signedOut' | 'always'} condition	- board-buttons: Default 'edit': When the button should be displayed. admin - User is an admin of the board, edit - User can edit the board, readOnly - User can not edit the board, signedIn - User is logged into Trello, signedOut - User is not logged into Trello, always - Always show.
+* @property {TrelloDisplayCondition} condition	- board-buttons: Default 'edit': When the button should be displayed. admin - User is an admin of the board, edit - User can edit the board, readOnly - User can not edit the board, signedIn - User is logged into Trello, signedOut - User is not logged into Trello, always - Always show.
 * @property {TrelloDefaultCallback} [callback] board-buttons: Optional function that will be called on click of the button
 * @property {String} [url]	board-buttons: Optional href for the button
 * @property {String} [target] board-buttons: Optional with use of url property to add a target to the anchor tag
 */
+/** 
+ * @typedef {Object} TrelloIconType
+ * @property {String} dark
+ * @property {String} light
+ */
 /**
 * @typedef {Object} TrelloAuthStatus
 * @property {Boolean} authorized - authorization-status
@@ -242,13 +271,18 @@
 /**
 * @typedef {Object} TrelloThumbnailItem
 * @property {String} title - attachment-thumbnail
-* @property {url:String, logo:Boolean} image - attachment-thumbnail
+* @property {TrelloAttachmentImage} image - attachment-thumbnail
 * @property {Date} modified - attachment-thumbnail
 * @property {Date} created - attachment-thumbnail
 * @property {String} createdBy - attachment-thumbnail
 * @property {String} modifiedBy - attachment-thumbnail
 * @property {Function} initialize - type:'iframe',url:String
 */
+/**
+ * @typedef {Object} TrelloAttachmentImage
+ * @property {String} url
+ * @property {Boolean} logo
+ */
 /**
 * @typedef {Object} TrelloClaimedItem
 * @property {String} id - attachment-sections
@@ -270,6 +304,7 @@
 * @property {TrelloAttachmentDataType[]} entries
 * @property {TrelloCard[]} cards
 * @property {Date} date
+* @property {String} search
 */
 /**
 * @callback TrelloSafeFunction
@@ -471,8 +506,10 @@
 */
 /**
 * @typedef {Object} TrelloAttachmentDataType
+* @property {String} id
 * @property {String} name
 * @property {String} url
+* @property {String} bytes
 */
 /**
 * @callback TrelloArgFunction
@@ -483,7 +520,6 @@
 /**
 * @callback TrelloLocalizeNodeFunction
 * @param {HTMLElement} DOMelement
-* @return 
 */
 /**
 * @callback TrelloLocalizeKeysFunction
@@ -511,19 +547,22 @@
 */
 /**
 * @callback TrelloMemberFunction
-* @param {... ("all", "id" | "fullName" | "username" | "avatar" | "initials")} fields
+* @param {... ("all" | "id" | "fullName" | "username" | "avatar" | "initials")} fields
 * @returns {TrelloMemberObject}
 */
 /**
 * @callback TrelloCardsFunction
-* @param { ... ("all" | "id" | "name" | "desc" | "due" | "dueComplete" | "closed" | "cover" | "attachments" | "members" | "labels" | "url" | "shortLink" | "idList" | "idShort" | "dateLastActivity" | "badges" | "customFieldItems" | "coordinates" | "address" | "locationName" | "pos")} fields
+* @param { ... (TrelloCardFields)} fields
 * @returns {TrelloCard[]}
 */
 /**
 * @callback TrelloCardFunction
-* @param { ... ("all" | "id" | "name" | "desc" | "due" | "dueComplete" | "closed" | "cover" | "attachments" | "members" | "labels" | "url" | "shortLink" | "idList" | "idShort" | "dateLastActivity" | "badges" | "customFieldItems" | "coordinates" | "address" | "locationName" | "pos" | "checklists" )} fields
+* @param { ... (TrelloCardFields)} fields
 * @returns {TrelloCard}
 */
+/**
+ * @typedef {"all" | "id" | "name" | "desc" | "due" | "dueComplete" | "closed" | "cover" | "attachments" | "members" | "labels" | "url" | "shortLink" | "idList" | "idShort" | "dateLastActivity" | "badges" | "customFieldItems" | "coordinates" | "address" | "locationName" | "pos" | "checklists"} TrelloCardFields
+ */
 /**
 * @callback TrelloListsFunction
 * @param {... ("all" | "id" | "name" | "cards")} fields
@@ -537,7 +576,7 @@
 /**
 * @callback TrelloBoardFunction
 * @param {... ("all" | "id" | "name" | "url" | "shortLink" | "members" | "dateLastActivity" | "idOrganization" | "customFields" | "labels" | "memberships")} fields
-* @return {TrelloBoard}
+* @returns {TrelloBoard}
 */
 /**
 * @callback TrelloApiClientObject
@@ -604,10 +643,21 @@
 * @property {TrelloMemberObject[]} members
 * @property {Date} dateLastActivity
 * @property {String} idOrganization
+* @property {TrelloLabel[]} labels
 * @property {*} customFields
-* @property {*} labels
-* @property {*} memberships
+* @property {TrelloMembership[]} memberships
 */
+/** 
+ * @typedef {Object} TrelloMembership
+ * @property {String} id
+ * @property {Boolean} deactivated
+ * @property {String} idMember
+ * @property {TrelloMemberType} memberType
+ * @property {Boolean} unconfirmed
+ */
+/** 
+ * @typedef {"admin" | "normal" | "observer" | "unknown"} TrelloMemberType 
+ */
 /**
 * @typedef {Object} TrelloList
 * @property {String} id
@@ -621,13 +671,15 @@
 * @property {String} desc
 * @property {Date} due
 * @property {Boolean} dueComplete
+* @property {Date} start
 * @property {Boolean} closed
-* @property {*} cover
-* @property {TrelloAttachmentObject[]} attachments
+* @property {TrelloCardCover} cover
+* @property {TrelloAttachmentDataType[]} attachments
 * @property {TrelloMemberObject[]} members
-* @property {*} labels
+* @property {TrelloLabel[]} labels
 * @property {String} url
 * @property {String} shortLink
+* @property {String} shortUrl
 * @property {String} idList
 * @property {String} idShort
 * @property {Date} dateLastActivity
@@ -636,8 +688,27 @@
 * @property {{Number,Number}} coordinates
 * @property {String} address
 * @property {String} locationName
-* @property {Number} pos
+* @property {"top" | "bottom" | Number} pos
 * @property {TrelloChecklist[]} checklists
+*/
+/**
+* @typedef {Object} TrelloLabel
+* @property {String} id
+* @property {String} idBoard
+* @property {String} name
+* @property {TrelloColor} color
+*/
+/**
+* @typedef {Object} TrelloCardCover
+* @property {TrelloColor} color
+* @property {String} idAttachment
+* @property {String} idUploadedBackground
+* @property {'normal' | 'large' } size
+* @property {'light' | 'dark'} brightness
+* @property {String} idPlugin
+*/
+/**
+* @typedef { 'blue' | 'green' | 'orange' | 'red' | 'yellow' | 'purple' | 'pink' | 'sky' | 'lime' | 'light-gray' } TrelloColor
 */
 /**
 * @typedef {Object} TrelloMemberObject
@@ -653,12 +724,14 @@
 * @property {String} name
 */
 /** 
- * @typedef {Object} TrelloChecklist
- * @property {String} id
- * @property {String} name
- * @property {Number} pos
- * @property {TrelloCheckItem[]} checkItems
- */
+* @typedef {Object} TrelloCheckList 
+* @property {String} id
+* @property {String} idBoard
+* @property {String} idCard
+* @property {String} name
+* @property {Number} pos
+* @property {TrelloCheckItem[]} checkItems
+*/
 /**
  * @typedef {Object} TrelloCheckItem
  * @property {String} id
