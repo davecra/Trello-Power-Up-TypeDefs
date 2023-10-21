@@ -66,7 +66,8 @@ const onBtnClick = async(t,opts) => {
 ## Versions
 
  - v1.0.1.20221122 - first drop (beta)
- - v1.0.1.20230525 - update to include secrets (release)
+ - v1.0.1.20230525 - update to include secrets
+ - v1.0.1.20231021 - update to include checklists and fixes (release)
 
 ## Feedback
 
@@ -74,4 +75,4 @@ This is a work in progress, so please submit feedback to [Issues](https://github
 
 ## Future
 
-Very soon I will be adding this to NPM so you can install it from there as well. Just got to get a few more of the issues worked out and then setup the release pipeline, and vioa, I will be backj here with the instructions for installing using NPM.
+Please let me know if you would like to see this on NPM so you can install it from there as well. I might get that added at some point in the future if there is a demand for it.
