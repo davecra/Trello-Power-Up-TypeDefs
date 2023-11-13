@@ -1,7 +1,7 @@
 /********************************************************************************
  * Trello Object Definitions File
  * @author David E. Craig
- * @version 1.0.1.20231105
+ * @version 1.0.1.20231113
  * @description This is a types description file for Trello Power-Up's.
  * @summary This type description file is provided as-is. It is provided to the
  *          community to help built Power-Ups. For more information please see:
@@ -65,6 +65,7 @@
  * @property {Function} hideCard - Used to close a card if there is one currently open.
  * @property {TrelloPopupFunction} popup - The real workhorse of the UI controls available to your Power-Up, the popup lets you present options or controls to the user without disrupting their context. Popups can be stacked, meaning you can have users navigate through more than one if necessary and a back control comes built in. You can control the height of a popup, but the width is fixed by Trello.
  * @property {Function} closePopup - Close an open popup.
+ * @property {Function} back - Returns to the previous popup.
  * @property {TrelloSizeToFunction} sizeTo - You'll almost always need a way to tell Trello that the size of the content in one of your iframes has changed, or maybe doesn't perfectly line up with the height you requested when instantiating the iframe.
  * @property {TrelloSafeFunction} safe - Escapes a string for insertion into HTML, replacing &, <, >, ", and ' characters.
  * @property {TrelloStoreSecretFunction} storeSecret - To store sensitive information, such as an oauth token to a service other than Trello.
